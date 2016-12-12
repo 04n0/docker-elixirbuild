@@ -41,7 +41,7 @@ RUN cd /tmp && \
 # see https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
     apt-get install -y nodejs && \
-# install NodeJS applications for build process - bower, coffee script, node-gyp
+# install Node.js applications for build process - bower, coffee script, node-gyp
     npm install -g bower && \
     npm install -g coffee-script@${COFFEESCRIPT_VERSION} && \
     npm install -g node-gyp@3.4.0 && \
@@ -52,7 +52,7 @@ RUN cd /tmp && \
     rm -rf /tmp/*
 # copy buildscript and make it executable
 COPY example/build.sh /build.sh
-RUN  chmod 755 /build.sh
+RUN chmod 755 /build.sh
 # change workdir
 WORKDIR /
 # run build process when you execute container
