@@ -6,8 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 # phoenix version -- uncomment / comment mix install with ${PHOENIX_VERSION}
 # if specific version of Phoenix framework is needed needed
 ARG PHOENIX_VERSION="1.2.1"
-ARG ERLANG_VERSION="19.1"
-ARG COFFEESCRIPT_VERSION="1.11.1"
+ARG ERLANG_VERSION="19.2"
+ARG COFFEESCRIPT_VERSION="1.12"
 # apply utf-8 locales
 RUN locale-gen en_US.utf8 && locale -a && dpkg-reconfigure locales
 # set environment variables for build process
