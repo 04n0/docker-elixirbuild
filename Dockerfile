@@ -3,10 +3,11 @@ FROM ubuntu:14.04
 MAINTAINER 04n0
 # set debian frontend to noninteractive during the build process
 ARG DEBIAN_FRONTEND=noninteractive
-# phoenix version -- uncomment / comment mix install with ${PHOENIX_VERSION}
-# if specific version of Phoenix framework is needed needed
+# set phoenix/erlang versions for build process
+# (might be a reference only)
 ARG PHOENIX_VERSION="1.2.1"
 ARG ERLANG_VERSION="19.2"
+# set coffeescript version
 ARG COFFEESCRIPT_VERSION="1.12"
 # apply utf-8 locales
 RUN locale-gen en_US.utf8 && locale -a && dpkg-reconfigure locales
