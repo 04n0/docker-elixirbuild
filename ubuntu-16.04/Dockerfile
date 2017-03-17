@@ -3,9 +3,7 @@ FROM library/ubuntu:16.04
 MAINTAINER 04n0
 # set debian frontend to noninteractive during the build process
 ARG DEBIAN_FRONTEND=noninteractive
-# set phoenix/erlang versions for build process
-# (might be a reference only)
-ARG PHOENIX_VERSION="1.2.1"
+# set erlang version
 ARG ERLANG_VERSION="19.3"
 # set coffeescript version
 ARG COFFEESCRIPT_VERSION="1.12"

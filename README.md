@@ -1,9 +1,15 @@
-Elixir / Phoenix Framework build and release environment
+## Elixir / Phoenix Framework build and release environment
 
-base:image: Ubuntu 16.04
+### ubuntu-16.04/Dockerfile 
+
+base.image: ubuntu 16.04
 erlang: 19.3
-phoenix.framework: 1.2.1
 elixir: latest
 
+### alpine-edge/Dockerfile
+
+base.image: alpine edge
+erlang: 19.3
+elixir: 1.4.2
 
 prvrs:labs
