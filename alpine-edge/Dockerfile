@@ -3,11 +3,18 @@ FROM alpine:edge
 
 MAINTAINER 04n0
 
+# 
 ARG ERLANG_VERSION="19.3"
 ARG ELIXIR_VERSION="1.4.2"
 ARG NODEGYP_VERSION="3.6.0"
 ARG COFFEESCRIPT_VERSION="1.12"
 
+# erlang/OTP build env
+ARG ERL_TOP=/tmp/erlang-build
+ARG PATH=${ERL_TOP}/bin:${PATH}
+ARG CPPFLAGS="-D_BSD_SOURCE $CPPFLAGS"
+
+# image env variables
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
     LC_ALL=en_US.UTF-8 \
@@ -20,26 +27,27 @@ RUN \
     adduser -s /bin/sh -u 1001 -G root -h ${HOME} -S -D default && \
     chown -R 1001:0 ${HOME} && \
 # upgrade Alpine and base packages
-    apk --no-cache --update upgrade && \
-# install Erlang/OTP deps
+    apk upgrade --no-cache --update && \
+# install build tools, utils and ERLANG/OTP build deps
     apk add --no-cache \
+      unzip \
       bash \
+      git \
+      curl \
+      autoconf \
+      build-base \
+      make \
+      g++ \
       ca-certificates \
       openssl-dev \
       ncurses-dev \
+      perl-dev \
       unixodbc-dev \
-      zlib-dev \
-      git make unzip g++ curl && \
-# install Erlang/OTP build deps
-    apk add --no-cache --virtual .erlang-build \
-    git autoconf build-base perl-dev && \
+      zlib-dev && \
+    apk add --no-cache --virtual .erlang-build && \
 # shallow clone Erlang/OTP in ${ERLANG_VERSION} version
-    export ERL_TOP=/tmp/erlang-build && \
     mkdir -p ${ERL_TOP} && cd ${ERL_TOP} && \
     git clone -b OTP-${ERLANG_VERSION} --single-branch --depth 1 https://github.com/erlang/otp.git . && \
-# erlang/OTP build env
-    export PATH=$ERL_TOP/bin:$PATH && \
-    export CPPFlAGS="-D_BSD_SOURCE $CPPFLAGS" && \
 # configure
     ./otp_build autoconf && \
     ./configure --prefix=/usr \
@@ -80,7 +88,7 @@ RUN \
     update-ca-certificates --fresh
 
 RUN \
-# install elixir
+# install elixir from github precompiled binary package
     cd /tmp && \
     curl -LO https://github.com/elixir-lang/elixir/releases/download/v${ELIXIR_VERSION}/Precompiled.zip && \
     unzip Precompiled.zip && \
