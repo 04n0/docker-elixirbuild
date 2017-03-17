@@ -1,12 +1,12 @@
 # vim:set ft=dockerfile:
-FROM ubuntu:14.04
+FROM library/ubuntu:16.04
 MAINTAINER 04n0
 # set debian frontend to noninteractive during the build process
 ARG DEBIAN_FRONTEND=noninteractive
 # set phoenix/erlang versions for build process
 # (might be a reference only)
 ARG PHOENIX_VERSION="1.2.1"
-ARG ERLANG_VERSION="19.2"
+ARG ERLANG_VERSION="19.3"
 # set coffeescript version
 ARG COFFEESCRIPT_VERSION="1.12"
 # apply utf-8 locales
@@ -20,7 +20,7 @@ ENV LANG=en_US.UTF-8 \
 RUN apt-get update && \
     apt-get upgrade -y && \
 # install necessary packages for build process
-    apt-get install -y curl git make sudo gcc libwxgtk3.0-0 imagemagick && \
+    apt-get install -y curl git make sudo gcc libwxgtk3.0-0v5 imagemagick && \
 # do cleanup
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
@@ -45,7 +45,7 @@ RUN cd /tmp && \
 # install Node.js applications for build process - bower, coffee script, node-gyp
     npm install -g bower && \
     npm install -g coffee-script@${COFFEESCRIPT_VERSION} && \
-    npm install -g node-gyp@3.4.0 && \
+    npm install -g node-gyp@3.6.0 && \
 # cleanup
     apt-get clean && \
     apt-get autoremove -y && \

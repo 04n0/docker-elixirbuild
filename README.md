@@ -1,4 +1,9 @@
-### Docker image(s)
+Elixir / Phoenix Framework build and release environment
 
-Currently the project covers three build images:
-* Ubuntu 14.04 (default - Dockerfile)
+base:image: Ubuntu 16.04
+erlang: 19.3
+phoenix.framework: 1.2.1
+elixir: latest
+
+
+prvrs:labs
