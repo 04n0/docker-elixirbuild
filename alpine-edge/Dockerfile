@@ -23,6 +23,7 @@ RUN \
     apk --no-cache --update upgrade && \
 # install Erlang/OTP deps
     apk add --no-cache \
+      bash \
       ca-certificates \
       openssl-dev \
       ncurses-dev \
