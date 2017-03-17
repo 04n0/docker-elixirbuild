@@ -101,6 +101,10 @@ RUN \
     rm -rf /tmp && \
     rm -rf /var/cache/apk/* 
 
-WORKDIR ${HOME}
-
-CMD ["/bin/sh"]
+# copy buildscript and make it executable
+COPY ../example/build.sh /build.sh
+RUN chmod 755 /build.sh
+# change workdir
+WORKDIR /
+# run build process when you execute container
+CMD ["/build.sh"]
