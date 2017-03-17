@@ -102,7 +102,7 @@ RUN \
     rm -rf /var/cache/apk/* 
 
 # copy buildscript and make it executable
-COPY ../example/build.sh /build.sh
+COPY example/build.sh /build.sh
 RUN chmod 755 /build.sh
 # change workdir
 WORKDIR /
