@@ -31,6 +31,8 @@ RUN \
 # install build tools, utils and ERLANG/OTP build deps
     apk add --no-cache \
       unzip \
+      coreutils \
+      findutils \
       bash \
       git \
       curl \
@@ -39,6 +41,8 @@ RUN \
       make \
       g++ \
       ca-certificates \
+      python2 \
+      python2-dev \
       openssl-dev \
       ncurses-dev \
       perl-dev \
@@ -94,10 +98,7 @@ RUN \
     unzip Precompiled.zip && \
     mkdir -p /usr/local/bin && mv bin/* /usr/local/bin && \
     mkdir -p /usr/local/man && mv man/* /usr/local/man && \
-    mkdir -p /usr/local/lib && mv lib/* /usr/local/lib && \
-# install hex and rebar
-    /usr/local/bin/mix local.hex --force && \
-    /usr/local/bin/mix local.rebar --force
+    mkdir -p /usr/local/lib && mv lib/* /usr/local/lib
 
 RUN \
     cd $HOME && \
