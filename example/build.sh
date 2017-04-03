@@ -2,6 +2,7 @@
 
 # enable debug info ; exit on first issue
 set -x
+set -u
 #set -e
 
 MYAPP_BUILD_DIR="/build"
