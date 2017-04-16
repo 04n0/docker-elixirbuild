@@ -3,7 +3,7 @@ FROM alpine:edge
 
 MAINTAINER 04n0
 
-# 
+#
 ARG ERLANG_VERSION="19.3"
 ARG ELIXIR_VERSION="1.4.2"
 ARG NODEGYP_VERSION="3.6.0"
@@ -102,14 +102,18 @@ RUN \
 
 RUN \
     cd $HOME && \
-# install nodejs, bower, coffee script, node-gyp
+# install nodejs, npm, yarn
     apk add --no-cache nodejs nodejs-npm yarn && \
+# aarch64  uid-number "Error: could not get uid/gid" workaround
+    if [[ "$(uname -m)" == "aarch64" ]]; then \
+    npm config set unsafe-perm true ; fi && \
+# install bower, coffee script, node-gyp
     npm install -g bower && \
     npm install -g coffee-script@${COFFEESCRIPT_VERSION} && \
     npm install -g node-gyp@${NODEGYP_VERSION} && \
 # cleanup
     rm -rf /tmp && \
-    rm -rf /var/cache/apk/* 
+    rm -rf /var/cache/apk/*
 
 # copy buildscript and make it executable
 COPY example/build.sh /build.sh
