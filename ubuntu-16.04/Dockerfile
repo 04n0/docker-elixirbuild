@@ -8,7 +8,13 @@ ARG ERLANG_VERSION="19.3"
 # set coffeescript version
 ARG COFFEESCRIPT_VERSION="1.12"
 # apply utf-8 locales
-RUN locale-gen en_US.utf8 && locale -a && dpkg-reconfigure locales
+RUN apt-get update && \
+    apt-get install locales && \
+    locale-gen en_US.utf8 && \
+    locale -a && \
+    dpkg-reconfigure locales && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 # set environment variables for build process
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US:en \
