@@ -21,6 +21,12 @@ ENV LANG=en_US.UTF-8 \
     HOME=/build \
     TERM=xterm
 
+# alpine linux packages to be installed
+ARG APK_PACKAGES_TOOLS="coreutils findutils curl ca-certificates \
+                        bash unzip git"
+ARG APK_PACKAGES_BUILD="build-base autoconf make g++ python2-dev python2 \
+                        openssl-dev ncurses-dev perl-dev unixodbc-dev zlib-dev"
+
 RUN \
 # create default user and home directory, set owner to default
     mkdir -p ${HOME} && \
@@ -29,25 +35,7 @@ RUN \
 # upgrade Alpine and base packages
     apk upgrade --no-cache --update && \
 # install build tools, utils and ERLANG/OTP build deps
-    apk add --no-cache \
-      unzip \
-      coreutils \
-      findutils \
-      bash \
-      git \
-      curl \
-      autoconf \
-      build-base \
-      make \
-      g++ \
-      ca-certificates \
-      python2 \
-      python2-dev \
-      openssl-dev \
-      ncurses-dev \
-      perl-dev \
-      unixodbc-dev \
-      zlib-dev && \
+    apk add --no-cache ${APK_PACKAGES_TOOLS} ${APK_PACKAGES_BUILD} && \
     apk add --no-cache --virtual .erlang-build && \
 # shallow clone Erlang/OTP in ${ERLANG_VERSION} version
     mkdir -p ${ERL_TOP} && cd ${ERL_TOP} && \
