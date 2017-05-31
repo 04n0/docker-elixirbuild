@@ -6,9 +6,9 @@
 *   erlang: 19.3
 *   elixir: latest (apt)
 
-### alpine-edge/Dockerfile
+### alpine/Dockerfile
 
-*   base.image: alpine edge
+*   base.image: alpine 3.6
 *   erlang: 19.3
 *   elixir: 1.4.2
 
