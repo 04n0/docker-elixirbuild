@@ -1,12 +1,12 @@
 # vim:set ft=dockerfile:
-FROM alpine:edge
+FROM alpine:3.6
 
 MAINTAINER 04n0
 
 #
 ARG ERLANG_VERSION="19.3"
 ARG ELIXIR_VERSION="1.4.2"
-ARG NODEGYP_VERSION="3.6.0"
+ARG NODEGYP_VERSION="3.6.1"
 ARG COFFEESCRIPT_VERSION="1.12"
 
 # erlang/OTP build env
