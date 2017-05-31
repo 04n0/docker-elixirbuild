@@ -7,6 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG ERLANG_VERSION="19.3"
 # set coffeescript version
 ARG COFFEESCRIPT_VERSION="1.12"
+ARG NODEGYP_VERSION="3.6.1"
 # apply utf-8 locales
 RUN apt-get update && \
     apt-get install locales && \
@@ -49,7 +50,7 @@ RUN cd /tmp && \
 # install Node.js applications for build process - bower, coffee script, node-gyp
     npm install -g bower && \
     npm install -g coffee-script@${COFFEESCRIPT_VERSION} && \
-    npm install -g node-gyp@3.6.0 && \
+    npm install -g node-gyp@${NODEGYP_VERSION} && \
 # cleanup
     apt-get clean && \
     apt-get autoremove -y && \
