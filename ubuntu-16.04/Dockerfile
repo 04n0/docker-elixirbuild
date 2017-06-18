@@ -7,7 +7,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG ERLANG_VERSION="19.3"
 # set coffeescript version
 ARG COFFEESCRIPT_VERSION="1.12"
-ARG NODEGYP_VERSION="3.6.1"
+ARG NODEGYP_VERSION="3.6.2"
 # apply utf-8 locales
 RUN apt-get update && \
     apt-get install locales && \
