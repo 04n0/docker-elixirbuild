@@ -83,7 +83,7 @@ REL=${REL:-edge}
 # e.g. build alpine:3.6 image instead of alpine:v3.6 as because the directory
 # structure on alpinelinux.org does have the version dirs with 'v' prefix
 RELTAG=$(echo $REL | sed 's|v||')
-MIRROR=${MIRROR:-http://nl.alpinelinux.org/alpine}
+MIRROR=${MIRROR:-https://nl.alpinelinux.org/alpine}
 SAVE=${SAVE:-0}
 MAINREPO=$MIRROR/$REL/main
 ADDITIONALREPO=$MIRROR/$REL/community
