@@ -3,8 +3,8 @@
 ### ubuntu-16.04/Dockerfile
 
 *   base.image: ubuntu 16.04
-*   erlang: 19.3
-*   elixir: latest (apt)
+*   erlang: 20.0
+*   elixir: 1.4.5
 
 ### alpine/Dockerfile
 
