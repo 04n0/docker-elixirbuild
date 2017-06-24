@@ -1,11 +1,11 @@
 # vim:set ft=dockerfile:
-FROM alpine:3.6
+# based on https://github.com/bitwalker/alpine-erlang
+FROM library/alpine:3.6
 
 MAINTAINER 04n0
 
-#
-ARG ERLANG_VERSION="19.3"
-ARG ELIXIR_VERSION="1.4.2"
+ARG ERLANG_VERSION="20.0"
+ARG ELIXIR_VERSION="1.4.5"
 ARG NODEGYP_VERSION="3.6.2"
 ARG COFFEESCRIPT_VERSION="1.12"
 
@@ -22,10 +22,11 @@ ENV LANG=en_US.UTF-8 \
     TERM=xterm
 
 # alpine linux packages to be installed
-ARG APK_PACKAGES_TOOLS="coreutils findutils curl ca-certificates \
-                        bash unzip git"
-ARG APK_PACKAGES_BUILD="build-base autoconf make g++ python2-dev python2 \
-                        openssl-dev ncurses-dev perl-dev unixodbc-dev zlib-dev"
+ARG APK_PACKAGES_TOOLS="bash ca-certificates coreutils curl findutils git \
+                        pcre unzip"
+ARG APK_PACKAGES_BUILD="autoconf build-base g++ make ncurses-dev openssl-dev \
+                        perl-dev python2 python2-dev unixodbc-dev zlib-dev \
+                        libxslt-dev libxml2-dev"
 
 RUN \
 # create default user and home directory, set owner to default
@@ -35,12 +36,14 @@ RUN \
 # upgrade Alpine and base packages
     apk upgrade --no-cache --update && \
 # install build tools, utils and ERLANG/OTP build deps
-    apk add --no-cache ${APK_PACKAGES_TOOLS} ${APK_PACKAGES_BUILD} && \
-    apk add --no-cache --virtual .erlang-build && \
+    apk add --no-cache ${APK_PACKAGES_TOOLS} && \
+    apk add --no-cache --virtual .erlang-build ${APK_PACKAGES_BUILD} && \
 # shallow clone Erlang/OTP in ${ERLANG_VERSION} version
     mkdir -p ${ERL_TOP} && cd ${ERL_TOP} && \
+    echo "Erlang - git clone" && \
     git clone -b OTP-${ERLANG_VERSION} --single-branch --depth 1 https://github.com/erlang/otp.git . && \
 # configure
+    echo "Erlang - configure" && \
     ./otp_build autoconf && \
     ./configure --prefix=/usr \
       --sysconfdir=/etc \
@@ -51,7 +54,6 @@ RUN \
       --without-debugger \
       --without-observer \
       --without-jinterface \
-      --without-common_test \
       --without-cosEvent\
       --without-cosEventDomain \
       --without-cosFileTransfer \
@@ -72,6 +74,7 @@ RUN \
       --enable-ssl=dynamic-ssl-lib \
       --enable-hipe && \
 # build erlang
+    echo "Erlang - build" && \
     make -j4 && make install && \
 # cleanup
     apk del .erlang-build && \
@@ -96,9 +99,9 @@ RUN \
     if [[ "$(uname -m)" == "aarch64" ]]; then \
     npm config set unsafe-perm true ; fi && \
 # install bower, coffee script, node-gyp
-    npm install -g bower && \
-    npm install -g coffee-script@${COFFEESCRIPT_VERSION} && \
-    npm install -g node-gyp@${NODEGYP_VERSION} && \
+    yarn global add bower && \
+    yarn global add coffee-script@${COFFEESCRIPT_VERSION} && \
+    yarn global add node-gyp@${NODEGYP_VERSION} && \
 # cleanup
     rm -rf /tmp && \
     rm -rf /var/cache/apk/*
