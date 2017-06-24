@@ -9,8 +9,8 @@
 ### alpine/Dockerfile
 
 *   base.image: alpine 3.6
-*   erlang: 19.3
-*   elixir: 1.4.2
+*   erlang: 20.0
+*   elixir: 1.4.5
 
 
 ## Pre-built Docker images
